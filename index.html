@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="NL">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="author" content="Yannick Pot"/>
@@ -10,50 +10,75 @@
 	</head>
 	<body>
 		<nav>
-
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a>Solutions</a></li>
+			</ul>
 		</nav>
 
 		<main>
-			<div class="centerContent">
-				<div class="informationBox">
+			<section class="informationBox">
+				<div class="centerContent">
 					<!--First fase-->
-					<form action="mailto: yannickpot@gmail.com" method="get">
+					<article class="formreplacer">
 						<h1>Klant informatie</h1>
-						
-						<div class="question">
-							<input type="text" name="naam" id="naam" required>
-							<label for="naam">Naam</label>
-						</div>
-						<div class="question">
-  							<input type="text" name="onderwerp" id="onderwerp" required>
-  							<label for="onderwerp">Modum model naam</label>
-  						</div>
-
-  						<div class="question">
-	  						<textarea placeholder="reactie" type="text" name="reactie" required></textarea>
-	  					</div>
-  						<button>Confirm information</button>
-					</form>
+							<!--Question-->
+							<div class="question">
+								<input type="text" name="naam" id="naam" autofocus="autofocus" autocomplete="on" required>
+								<label for="naam">Naam</label>
+							</div>
+							<!--End Question-->
+							<!--Question-->
+							<div class="question">
+	  						<input type="date" name="datum" id="datum" required readonly>
+								<label for="datum">Datum</label>
+							</div>
+							<!--End Question-->
+							<!--Question-->
+							<div class="question">
+	  						<input type="text" name="modum" id="modum" autocomplete="on" required>
+								<label for="modum">Merk en type van modum</label>
+							</div>
+							<!--End Question-->
+          	<span id="clientInformationConfirm" class="btn">Data is correct</span>
+					</article>
+					<!--end First fase-->
 					<!-- Second fase -->
-					<form action="mailto: yannickpot@gmail.com" method="get">
-						<h1>Internet </h1>
-						
-						<div class="question">
-							<input type="text" name="naam" id="naam" required>
-							<label for="naam">Naam</label>
-						</div>
-						<div class="question">
-  							<input type="text" name="onderwerp" id="onderwerp" required>
-  							<label for="onderwerp">Modum model naam</label>
-  						</div>
+					<article class="internetProbleem">
+          	<div class="formreplacer">
 
-  						<div class="question">
-	  						<textarea placeholder="reactie" type="text" name="reactie" required></textarea>
-	  					</div>
-  						<button>Confirm information</button>
-					</form>
+							<h1>Internet </h1>
+
+							<div class="question2">
+								<label for="goToSite">Kan de gebruiker de site "Nu.nl" berijken?</label>
+                <div class="buttonPair">
+                	<span class="btn ja">Ja</span>
+                  <span class="btn nee">Nee</span>
+                </div>
+							</div>
+
+							<div class="question2">
+								<label for="reload">Kan de klant deze pagina verversen?</label>
+              	<div class="buttonPair">
+                  <span class="btn ja">Ja</span>
+                	<span class="btn nee">Nee</span>
+            		</div>
+							</div>
+              <a class="btn finish2">Data is correct</a>
+
+						</div><!--End formreplacer-->
+					</article>
 				</div>
-			</div>
+			</section>
+
+			<section class="t">
+				<div class="centerContent">
+					<h1>Welkom!</h1>
+				</div>
+			</section>
 		</main>
+		<footer>
+			<span>&copy;2015</span>
+		</footer>
 	</body>
 </html>
