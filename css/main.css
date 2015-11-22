@@ -66,10 +66,22 @@ h1{
   border-bottom-right-radius: 100%;
   border-bottom-left-radius: 20%;
 }
+h3{
+  margin-top: 18px;
 
+  font-weight: 500;
+
+  border-top: 1px solid black;
+}
 /*Temp*/
 .t{
   background: white;
+}
+.show{
+  display: block;
+}
+.hidden{
+  display: none;
 }
 /*End temp*/
 
@@ -82,6 +94,9 @@ h1{
   padding-bottom: 5px;
 
   border: #babadf solid 1px;
+}
+a.btn, a.btnPressed{
+  margin-top: 7px;
 }
 .btn{
   background-color: lightblue;
@@ -244,17 +259,17 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
   transform: translate(-124%, 0px) scale(0.8);
 }
 /*Question p2*/
-.question2{
+.questionOption{
   display: block;
 
   height: 30px;
 
   margin-top: 20px;
 }
-.question2 .btn, .question2 .btnPressed{
+.questionOption .btn, .questionOption .btnPressed{
   margin: 0px;
 }
-.question2 label{
+.questionOption label{
   float: left;
   clear: left;
 

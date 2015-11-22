@@ -40,7 +40,7 @@
 								<label for="modum">Merk en type van modum</label>
 							</div>
 							<!--End Question-->
-          	<span id="clientInformationConfirm" class="btn">Data is correct</span>
+          	<span class="btn finishButton" data-finishIndex="0">Data is correct</span>
 					</article>
 					<!--end First fase-->
 					<!-- Second fase -->
@@ -49,7 +49,7 @@
 
 							<h1>Internet </h1>
 
-							<div class="question2">
+							<div class="questionOption">
 								<label for="goToSite">Kan de gebruiker de site "Nu.nl" berijken?</label>
                 <div class="buttonPair">
                 	<span class="btn ja">Ja</span>
@@ -57,15 +57,16 @@
                 </div>
 							</div>
 
-							<div class="question2">
+							<div class="questionOption">
 								<label for="reload">Kan de klant deze pagina verversen?</label>
               	<div class="buttonPair">
                   <span class="btn ja">Ja</span>
                 	<span class="btn nee">Nee</span>
             		</div>
 							</div>
-              <a class="btn finish2">Data is correct</a>
 
+							<h3>Heeft de klant een klacht over het product <em>Internet en Bellen</em> </h2>
+              <a class="btn continue">Ja</a><a class="btn finishButton" data-finishIndex="1">Nee</a>
 						</div><!--End formreplacer-->
 					</article>
 				</div>
@@ -74,6 +75,15 @@
 			<section class="t">
 				<div class="centerContent">
 					<h1>Welkom!</h1>
+					<div class="finish solution show">
+						<h2>Finish</h2>
+					</div>
+					<div class="finishInternet solution show">
+						<h2>finishInternet</h2>
+					</div>
+					<div class="finishInternetEnBellen solution show">
+						<h2>finishInternetEnBellen</h2>
+					</div>
 				</div>
 			</section>
 		</main>

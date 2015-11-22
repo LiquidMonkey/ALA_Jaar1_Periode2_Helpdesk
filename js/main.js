@@ -2,6 +2,7 @@ window.onload = function(){
 
 	setDateNow();
 	setButtonActions();
+	closeSolutions();
 };
 
 function setDateNow(){
@@ -46,25 +47,71 @@ function setButtonActions(){
 	}
 	//end of yes and no buttons js
 	//progress buttons
-
+	var internetProgress = Array.prototype.slice.call(document.querySelectorAll('.continue'));
+	for(var i = 0; i < internetProgress.length; i++){
+		internetProgress[i].onclick = function(){
+			//open next part of the questions
+		}
+	}
+	//finishbuttons
+	var finishbuttons =  Array.prototype.slice.call(document.querySelectorAll('.finishButton'));
+	for(var i = 0; i < finishbuttons.length; i++){
+		finishbuttons[i].onclick = function(){
+			var finishIndex = this.dataset.finishindex; //gets the buttons finish index so it knows which finish screen to show
+			openFinish(finishIndex);//opens the finishscreen with the given index
+		}
+	}
 }
 
 function optionSelected(object, value){
 	var currentStatus = object.className;
 	if(/\bbtn\b/.test(currentStatus)){//if currentStatus contains the word btn (\b makes it so it doesnt matter where the btn is)
-		object.classList.remove("btn");
-		object.classList.add("btnPressed");
+		swapClasses(object, "btn", "btnPressed");
 		var pairedButton;
 		if(/\bja\b/.test(currentStatus)){
 			pairedButton = object.nextElementSibling;
 		} else {
 			pairedButton = object.previousElementSibling;
 		}
-		pairedButton.classList.remove("btnPressed");
-		pairedButton.classList.add("btn");
+		swapClasses(pairedButton, "btnPressed", "btn");
 	}else{
-		object.classList.remove("btnPressed");
-		object.classList.add("btn");
+		swapClasses(object, "btnPressed", "btn");
 	}
 	object.parentElement.setAttribute("data", value);
+}
+
+function swapClasses(object, remove, add){
+	if( object.getAttribute("class") ){
+		object.classList.remove( remove );
+		object.classList.add( add );
+	}
+}
+
+var openFinish = function( index ){
+	var solutions = ["finish", "finishInternet, finishInternetEnBellen"];
+	var solution;
+	closeSolutions(); //closes any solutions that are open before opening another solution
+	switch( parseInt(index) ){
+		case 0:
+			solution = document.querySelectorAll('.'+solutions[0])[0];
+			swapClasses(solution, "hidden", "show");
+			break;
+		case 1:
+			solution = document.querySelectorAll('.'+solutions[1])[0];
+			swapClasses(solution, "hidden", "show");
+			break;
+		case 2:
+			solution = document.querySelectorAll('.'+solutions[2])[0];
+			swapClasses(solution, "hidden", "show");
+			break;
+		default:
+			console.log("You done goofed brah");
+	}
+}
+
+function closeSolutions(){
+	var solutions = Array.prototype.slice.call( document.querySelectorAll(".solution") );
+	for(var i = 0; i < solutions.length; i++){
+		swapClasses(solutions[i], "show", "hidden");
+	}
 }
