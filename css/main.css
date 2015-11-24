@@ -45,6 +45,7 @@ main{
 
 footer{
   height: 3%;
+  background: #234565;
 }
 
 section{
@@ -136,7 +137,7 @@ a.btn, a.btnPressed{
   margin: 0px;
 }
 /*Fancy css*/
-nav ul li a, .btn, .question label, .question input[type="text"], .question input[type="date"] {
+nav ul li a, .btn, .question label, .question input[type="text"], .question input[type="date"], .question input[type="number"] {
   -moz-transition: all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5);
   -o-transition: all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5);
   -webkit-transition: all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5);
@@ -162,9 +163,15 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
 
   pointer-events: none;
 }
+.question input[type="number"] ~ label{
+  left: 27%;
+}
 @media screen and (max-width: 980px){
   .question label{
     left: 22%;
+  }
+  .question input[type="number"] ~ label{
+    left: 23.7%;
   }
 }
 @media screen and (max-width: 800px){
@@ -180,7 +187,7 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
     margin-right: 60px;
   }
 }
-.question input[type="text"], .question input[type="date"]{
+.question input[type="text"], .question input[type="date"], .question input[type="number"]{
   appearance: none;
   background-color: none;
 
@@ -203,7 +210,12 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
   left: 15%;
   z-index: 1;
 }
-.question input[type="text"]:focus {
+.question input[type="number"]{
+  width: 12%;
+  left: 54%;
+}
+
+.question input[type="text"]:focus, .question input[type="number"]:focus {
   transform: translate(35%, 0%);
 
   outline: none;
@@ -233,7 +245,7 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
   transform: translate(-45%, 0px);
 }
 
-.question input[type="text"]:valid ~ label, .question input[type="date"] ~ label{
+.question input[type="text"]:valid ~ label, .question input[type="date"] ~ label, .question input[type="number"]:valid ~ label{
   text-transform: uppercase;
   font-style: italic;
   color: black;
@@ -257,6 +269,12 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
   -ms-transform: translate(-124%, 0px) scale(0.8);
   -webkit-transform: translate(-124%, 0px) scale(0.8);
   transform: translate(-124%, 0px) scale(0.8);
+}
+.question input[type="number"]:valid ~ label{
+  -moz-transform: translate(-7%, 0px) scale(0.78);
+  -ms-transform: translate(-7%, 0px) scale(0.78);
+  -webkit-transform: translate(-7%, 0px) scale(0.78);
+  transform: translate(-7%, 0px) scale(0.78);
 }
 /*Question p2*/
 .questionOption{
@@ -285,6 +303,39 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
 }
 .finish2{
   clear: both;
+}
+/*Solution css*/
+.solutionContainer span{
+  /*width: auto;*/
+}
+span .liner{
+  display: block;
+}
+span .separator{
+  display: inline-block;
+  width: 5%;
+}
+.icon{
+  display: inline-block;
+
+  width: 18px;
+  height: 18px;
+}
+.solutionContainer .name{
+  background: ../media/nameIcon.png;
+}
+.solutionContainer .date{
+  background: ../media/dateIcon.png;
+}
+.solutionContainer .modum{
+  background: ../media/modumIcon.png;
+}
+.solutionContainer .aantalToestellen{
+  background: ../media/aantalToestellenIcon.png;
+}
+.solutionContainer .valueName{
+  font-family: fantasy;
+  text-transform: capitalize;
 }
 /*NAV section*/
 nav{

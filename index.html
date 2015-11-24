@@ -44,10 +44,10 @@
 					</article>
 					<!--end First fase-->
 					<!-- Second fase -->
-					<article class="internetProbleem">
+					<article id="internet" class="show">
           	<div class="formreplacer">
 
-							<h1>Internet </h1>
+							<h1>Internet</h1>
 
 							<div class="questionOption">
 								<label for="goToSite">Kan de gebruiker de site "Nu.nl" berijken?</label>
@@ -66,24 +66,99 @@
 							</div>
 
 							<h3>Heeft de klant een klacht over het product <em>Internet en Bellen</em> </h2>
-              <a class="btn continue">Ja</a><a class="btn finishButton" data-finishIndex="1">Nee</a>
+              <a class="btn continue" data-next="internetEnBellen">Ja</a><a class="btn finishButton" data-finishIndex="1">Nee</a>
 						</div><!--End formreplacer-->
 					</article>
+					<!--end second phase-->
+					<!--third phase-->
+					<article id="internetEnBellen" class="hidden">
+						<h1>Internet en Bellen</h1>
+						<div class="questionOption">
+							<label for="reload">Hoort de klant een kiestoon?</label>
+							<div class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee">Nee</span>
+							</div>
+						</div>
+
+						<div class="questionOption">
+							<label for="zelfbellen">Kan de klant zichzelf bellen op bijvoorbeeld zijn of haar mobiele telefoon?</label>
+							<div class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee">Nee</span>
+							</div>
+						</div>
+
+						<div class="questionOption">
+							<label for="probleemApparaatbellen">Kan de klant de telefoon bellen waar de klant klachten over heeft?</label>
+							<div class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee">Nee</span>
+							</div>
+						</div>
+
+						<h3>Heeft de klant klacht over het product Internet, Bellen en Televisie?</h3>
+						<a class="btn continue" data-next="internetBellenEnTelevisie">Ja</a><a class="btn finishButton" data-finishIndex="2">Nee</a>
+					</article>
+					<!--end third phase-->
+					<!--fourth phase-->
+					<article id="internetBellenEnTelevisie" class="hidden">
+						<h1>Internet, Bellen en Televisie</h1>
+						<div class="question">
+							<input type="number" name="aantalToestellen" id="aantalToestellen" min="1" value="1" autocomplete="on" required>
+							<label for="aantalToestellen">Hoeveel televisie toestellen heeft de klant?</label>
+						</div>
+
+						<div class="questionOption">
+							<label for="splitterAansluiting">Is de splitter van de klant goed aangesloten?</label>
+							<div id="splitterAansluiting" class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee">Nee</span>
+							</div>
+						</div>
+
+						<div class="questionOption">
+							<label for="settopboxAansluiting">Is de settopbox van de klant goed aangesloten?</label>
+							<div id="settopboxAansluiting" class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee">Nee</span>
+							</div>
+						</div>
+
+						<div class="questionOption">
+							<label for="zendersZoeken">Kunnen er zenders gevonden worden?</label>
+							<div id="zendersZoeken" class="buttonPair">
+								<span class="btn ja">Ja</span>
+								<span class="btn nee abort">Nee</span>
+							</div>
+						</div>
+					</article>
+					<!--end fourth phase-->
 				</div>
 			</section>
 
 			<section class="t">
 				<div class="centerContent">
 					<h1>Welkom!</h1>
+
 					<div class="finish solution show">
 						<h2>Finish</h2>
+						<div class="solutionContainer">
+						</div>
 					</div>
+
 					<div class="finishInternet solution show">
 						<h2>finishInternet</h2>
+						<div class="solutionContainer">
+						</div>
 					</div>
+
 					<div class="finishInternetEnBellen solution show">
 						<h2>finishInternetEnBellen</h2>
+						<div class="solutionContainer">
+						</div>
 					</div>
+					
 				</div>
 			</section>
 		</main>
