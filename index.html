@@ -36,8 +36,8 @@
 							<!--End Question-->
 							<!--Question-->
 							<div class="question">
-	  						<input type="text" name="modum" id="modum" autocomplete="on" required>
-								<label for="modum">Merk en type van modum</label>
+	  						<input type="text" name="modem" id="modem" autocomplete="on" required>
+								<label for="modem">Merk en type van modem</label>
 							</div>
 							<!--End Question-->
           	<span class="btn finishButton" data-finishIndex="0">Data is correct</span>
@@ -51,7 +51,7 @@
 
 							<div class="questionOption">
 								<label for="goToSite">Kan de gebruiker de site "Nu.nl" berijken?</label>
-                <div class="buttonPair">
+                <div id="goToSite" class="buttonPair">
                 	<span class="btn ja">Ja</span>
                   <span class="btn nee">Nee</span>
                 </div>
@@ -59,14 +59,20 @@
 
 							<div class="questionOption">
 								<label for="reload">Kan de klant deze pagina verversen?</label>
-              	<div class="buttonPair">
+              	<div id="reload" class="buttonPair">
                   <span class="btn ja">Ja</span>
                 	<span class="btn nee">Nee</span>
             		</div>
 							</div>
 
-							<h3>Heeft de klant een klacht over het product <em>Internet en Bellen</em> </h2>
-              <a class="btn continue" data-next="internetEnBellen">Ja</a><a class="btn finishButton" data-finishIndex="1">Nee</a>
+							<h3>Heeft de klant een klacht over het product <em>Internet en Bellen</em>? </h3>
+              <a class="btn continue" data-next="internetEnBellen">Ja</a>
+							<a class="btn nextQuestion">Nee</a>
+							<div class="hidden">
+								<h3>Heeft de klant een klacht over het product <em>Internet, Bellen en Televisie</em>?</h3>
+									<a class="btn continue" data-next="internetBellenEnTelevisie">Ja</a>
+									<a class="btn finish" data-finishIndex="0">Nee</a>
+							</div>
 						</div><!--End formreplacer-->
 					</article>
 					<!--end second phase-->
@@ -74,8 +80,8 @@
 					<article id="internetEnBellen" class="hidden">
 						<h1>Internet en Bellen</h1>
 						<div class="questionOption">
-							<label for="reload">Hoort de klant een kiestoon?</label>
-							<div class="buttonPair">
+							<label for="kiestoon">Hoort de klant een kiestoon?</label>
+							<div id="kiestoon" class="buttonPair">
 								<span class="btn ja">Ja</span>
 								<span class="btn nee">Nee</span>
 							</div>
@@ -83,7 +89,7 @@
 
 						<div class="questionOption">
 							<label for="zelfbellen">Kan de klant zichzelf bellen op bijvoorbeeld zijn of haar mobiele telefoon?</label>
-							<div class="buttonPair">
+							<div id="zelfbellen" class="buttonPair">
 								<span class="btn ja">Ja</span>
 								<span class="btn nee">Nee</span>
 							</div>
@@ -91,7 +97,7 @@
 
 						<div class="questionOption">
 							<label for="probleemApparaatbellen">Kan de klant de telefoon bellen waar de klant klachten over heeft?</label>
-							<div class="buttonPair">
+							<div if="probleemApparaatbellen" class="buttonPair">
 								<span class="btn ja">Ja</span>
 								<span class="btn nee">Nee</span>
 							</div>
@@ -137,28 +143,25 @@
 				</div>
 			</section>
 
-			<section class="t">
+			<section class="solutions">
 				<div class="centerContent">
 					<h1>Welkom!</h1>
 
 					<div class="finish solution show">
-						<h2>Finish</h2>
 						<div class="solutionContainer">
 						</div>
 					</div>
 
 					<div class="finishInternet solution show">
-						<h2>finishInternet</h2>
 						<div class="solutionContainer">
 						</div>
 					</div>
 
 					<div class="finishInternetEnBellen solution show">
-						<h2>finishInternetEnBellen</h2>
 						<div class="solutionContainer">
 						</div>
 					</div>
-					
+
 				</div>
 			</section>
 		</main>

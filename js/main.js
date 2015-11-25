@@ -58,17 +58,36 @@ function setButtonActions(){
 			openQuestion( panel, this.dataset.next );//open next part of the questions
 		}
 	}
+	var askNext = Array.prototype.slice.call( document.querySelectorAll(".nextQuestion") );
+	askNext[0].onclick = function(){
+		swapClasses(this.nextElementSibling, "hidden", "show");
+	}
+	var special = document.querySelectorAll(".specialOpen");
+	special.onclick = function(){
+		closeSolutions();//closes the solution in case it was wrong so it doesnt distract
+		var panel = this.parentElement
+		while(panel.localName != "article"){
+			panel = panel.parentElement.nextElementSibling;
+		}
+		openQuestion( panel, this.dataset.next );
+	}
 	//finishbuttons
 	var finishbuttons =  Array.prototype.slice.call(document.querySelectorAll('.finishButton'));
 	for(var i = 0; i < finishbuttons.length; i++){
 		finishbuttons[i].onclick = function(){
 			var finishIndex = this.dataset.finishindex; //gets the buttons finish index so it knows which finish screen to show
-			getAndSetFinishData(finishIndex);//gets and sets all the data needed inside the finish screen
-			openFinish(finishIndex);//opens the finishscreen with the given index
+			var valid = getAndSetFinishData(finishIndex);//gets and sets all the data needed inside the finish screen
+			if(valid = true){
+				openFinish(finishIndex);//opens the finishscreen with the given index
+			} else {
+				fireWarning();
+			}
 		}
 	}
 }
-
+function fireWarning(){
+	alert("Values invalid");
+}
 function optionSelected(object, value){
 	var currentStatus = object.className;
 	if(/\bbtn\b/.test(currentStatus)){//if currentStatus contains the word btn (\b makes it so it doesnt matter where the btn is)
@@ -83,7 +102,7 @@ function optionSelected(object, value){
 	}else{
 		swapClasses(object, "btnPressed", "btn");//makes the button pressed
 	}
-	object.parentElement.setAttribute("data", value);//updates the value of the question (aka yes or no)
+	object.parentElement.setAttribute("data-answer", value);//updates the value of the question (aka yes or no)
 }
 
 /*
@@ -106,16 +125,12 @@ function swapClasses(object, remove, add){
 	var index: the index where the wanted solution is in within the solutions array
 */
 var openFinish = function( index ){
-	var solutions = ["finish", "finishInternet, finishInternetEnBellen"];
+	var solutions = ["finish", "finishInternet", "finishInternetEnBellen"];
 	var solution;
 	closeSolutions(); //closes any solutions that are open before opening another solution
 	switch( parseInt(index) ){
 		case 0:
 			solution = document.querySelectorAll('.'+solutions[0])[0];
-			swapClasses(solution, "hidden", "show");
-			break;
-		case 1:
-			solution = document.querySelectorAll('.'+solutions[1])[0];
 			swapClasses(solution, "hidden", "show");
 			break;
 		case 2:
@@ -148,12 +163,12 @@ function openQuestion(currentWindow, next){
 	swapClasses(document.getElementById(next), "hidden", "show");
 }
 
-/*
+/* !Old version of this function! new one is below
 	gets all values that have been filled in so far and inserts them into the solution page. (this function should be called everytime a finish window is opened)
-*/
+*//*
 function getAndSetFinishData(index){
 	var valueContainers = document.querySelectorAll(".question input");
-	var optionValueContainers = document.querySelectorAll(".questionOption input");
+	var optionValueContainers = document.querySelectorAll(".questionOption");
 
 	var valueSet = new Array();
 	for(var i = 0; i < valueContainers.length; i++){
@@ -164,12 +179,74 @@ function getAndSetFinishData(index){
 	solutionDiv.innerHTML = "";//empty solution
 
 	for(var j = 0; j < valueContainers.length; j++){//fil solution with all of the filled in values
-		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"separator\"></span> <span class=\"valueValue\">" + valueSet[j].value + "</span> </span><br />";
+		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"valueValue\">" + valueSet[j].value + "</span> </span><br />";
 	}
 
+	//optionValues
+	var valueSet2 = new Array();
+	var Value;
+	for(var i = 0; i < optionValueContainers.length; i++){
+		if( optionValueContainers[i].lastElementChild.dataset.answer == undefined ){
+			Value = "";
+		}else{
+			Value = optionValueContainers[i].lastElementChild.dataset.answer;
+		}
+		valueSet2.push({ name: optionValueContainers[i].lastElementChild.previousElementSibling.innerText, value: Value });
+	}
+	var solutionDiv2 = document.querySelectorAll(".solution div")[index];
+
+	for(var j = 0; j < optionValueContainers.length; j++){//fil solution with all of the filled in values
+		solutionDiv2.innerHTML = solutionDiv2.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet2[j].name + "</span> <span class=\"valueValue\">" + valueSet2[j].value + "</span> </span><br />";
+	}
+}*/
+
+function getAndSetFinishData(index){
+	var valueContainers = document.querySelectorAll(".question input, .questionOption");
+
+	var valid = true;
+
+	var valueSet = new Array();
+	for(var i = 0; i < valueContainers.length; i++){
+		if( /\bquestionOption\b/.test(valueContainers[i].classList) ){
+			if( valueContainers[i].lastElementChild.dataset.answer == undefined ){
+				Value = "";
+				valid = false;
+			}else{
+				Value = valueContainers[i].lastElementChild.dataset.answer;
+			}
+			valueSet.push({ name: valueContainers[i].lastElementChild.previousElementSibling.innerText, value: Value });
+		} else {
+			valueSet.push({name: valueContainers[i].name, value: valueContainers[i].value});
+		}
+	}
+	var solutionDiv = document.querySelectorAll(".solution div")[index];
+
+	solutionDiv.innerHTML = "";//empty solution
+
+	for(var j = 0; j < valueContainers.length; j++){//fil solution with all of the filled in values
+		//switch separates the different sections
+		switch(j){
+			case 0:
+				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Klant informatie</h4>";
+				break;
+			case 3:
+				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet</h4>";
+				break;
+			case 5:
+				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet en Bellen</h4>";
+				break;
+			case 8:
+				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet, Bellen en Televisie</h4>";
+				break;
+			default:
+				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br />";
+		}
+		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"valueValue\">" + valueSet[j].value + "</span> </span>";
+	}
+	return valid;
 }
 
-var iconList = ["name", "date", "modum", "aantalToestellen"];
+var iconList = ["name", "date", "modem"];
 function getIcon( type ){
 	var cssClass = iconList[type];
 	return cssClass;
