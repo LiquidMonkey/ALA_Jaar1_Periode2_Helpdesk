@@ -16,7 +16,7 @@ html, body, main{
 }
 
 main{
-    background: snow url(../media/helpdeskIconNetwork.jpg) center center no-repeat;
+    background: snow center center no-repeat;
     background-size: contain;
 }
 
@@ -513,7 +513,7 @@ nav{
 
   padding: 4px;
 
-  background: #334433;
+  background: black;
 }
 nav ul{
   list-style: none;

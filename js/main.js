@@ -2,9 +2,10 @@ window.onload = function(){
 
 	setDateNow();
 	setButtonActions();
-	closeSolutions();
+	closeSolutions();//makes sure all solutions are closed
 };
 
+//Gets and sets the date of today. (this uses the local time and date settings if this information is  wrong please check your system settings.)
 function setDateNow(){
 	var today = new Date();
 
@@ -58,7 +59,7 @@ function setButtonActions(){
 			}
 		}
 	}
-	//progress buttons
+	//progress buttons the buttons that open the next question list when requested
 	var continuebuttons = Array.prototype.slice.call(document.querySelectorAll('.continue'));
 	for(var i = 0; i < continuebuttons.length; i++){
 		continuebuttons[i].onclick = function(){
@@ -71,11 +72,12 @@ function setButtonActions(){
 			openQuestion( panel, this.dataset.next );//open next part of the questions
 		}
 	}
+	//Aske button is the button that shows the second question if the user doesnt want to get help with calling but instead with television
 	var askNext = Array.prototype.slice.call( document.querySelectorAll(".nextQuestion") );
 	askNext[0].onclick = function(){
 		swapClasses(this.nextElementSibling, "hidden", "show");
 	}
-	//finishbuttons
+	//finishbuttons (the buttons that print out all input in the designated element)
 	var finishbuttons =  Array.prototype.slice.call(document.querySelectorAll('.finishButton'));
 	for(var i = 0; i < finishbuttons.length; i++){
 		finishbuttons[i].onclick = function(){
@@ -84,25 +86,29 @@ function setButtonActions(){
 			if(valid){
 				openFinish(finishIndex);//opens the finishscreen with the given index
 			} else {
-				fireWarning( document.getElementById("modalPanel"), valid );
+				fireWarning( document.getElementById("modalPanel"), "Niet alle velden of vragen zijn ingevuld. Vul alle velden in voordat u veder gaat." );
 			}
 		}
 	}
 
-	//modalClose
+	//modalClose (the button that closes the modal panel)
 	document.getElementById("modalClose").onclick = function(){
 		swapClasses(document.getElementById("modalPanel"), "show", "hidden");
 	};
 
 }
+/*
+	Fires opens up the modalpanel with the error given error message on it
+
+	modal should be the modalPanel that should be shown (in this application there is currently only one but there could be more added)
+*/
 function fireWarning( modal, error ){
-	var target = Array.prototype.slice.call( document.querySelectorAll('#warning') )[0] ;
-	fillModal(target, error);
-	swapClasses(modal, "hidden", "show");
+	var target = Array.prototype.slice.call( document.querySelectorAll('#warning') )[0] ;//gets the place where the message should come
+	target.innerHTML = error;//adds the message to the place where it should go
+
+	swapClasses(modal, "hidden", "show");//makes the modalPanel visible
 }
-function fillModal( target, errorMessage ) {
-	target.innerHTML = errorMessage;
-}
+
 function optionSelected(object, value){
 	var currentStatus = object.className;
 	if(/\bbtn\b/.test(currentStatus)){//if currentStatus contains the word btn (\b makes it so it doesnt matter where the btn is)
@@ -168,8 +174,8 @@ function closeSolutions(){
 	var next: the panel that should be opened next
 */
 function openQuestion(currentWindow, next){
-	swapClasses(currentWindow, "show", "hidden");
-	swapClasses(document.getElementById(next), "hidden", "show");
+	//swapClasses(currentWindow, "show", "hidden"); //hides currently open questions list can be activated if prefered.
+	swapClasses(document.getElementById(next), "hidden", "show");//Shows the next questionList
 }
 
 /* !Old version of this function! new one is below
@@ -231,18 +237,31 @@ function getAndSetFinishData(type){
 
 	var valid = true;
 
+	var Value = false;
+	var Solution = false;
+
 	var valueSet = new Array();
 	for(var i = 0; i < valueContainers.length; i++){
 		if( /\bquestionOption\b/.test(valueContainers[i].classList) ){
-			if( valueContainers[i].lastElementChild.dataset.answer == undefined ){
+			if( valueContainers[i].lastElementChild.dataset.answer == undefined && type != 3 ){
 				Value = "";
+				Solution = false;
 				valid = false;
 			}else{
 				Value = valueContainers[i].lastElementChild.dataset.answer;
+				if(valueContainers[i].lastElementChild.dataset.answer == "nee"){
+					Solution = valueContainers[i].lastElementChild.dataset.solution;
+				} else {
+					Solution = false;
+				}
 			}
-			valueSet.push({ name: valueContainers[i].lastElementChild.previousElementSibling.innerText, value: Value });
+			if( Solution != false){
+				valueSet.push({ name: valueContainers[i].lastElementChild.previousElementSibling.innerText, value: Value, solution: Solution });
+			} else {
+				valueSet.push({ name: valueContainers[i].lastElementChild.previousElementSibling.innerText, value: Value, solution: ""});
+			}
 		} else {
-			valueSet.push({name: valueContainers[i].name, value: valueContainers[i].value});
+			valueSet.push({name: valueContainers[i].name, value: valueContainers[i].value, solution: ""});
 		}
 	}
 	var solutionDiv = document.querySelectorAll(".solution .solutionContainer")[0];
@@ -283,7 +302,7 @@ function getAndSetFinishData(type){
 					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br />";
 			}
 		}
-		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"valueValue\">" + valueSet[j].value + "</span> </span>";
+		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span>	<span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"valueValue\">" + valueSet[j].value + "</span>" + valueSet[j].solution + "</span>";
 	}
 	return valid;
 }
