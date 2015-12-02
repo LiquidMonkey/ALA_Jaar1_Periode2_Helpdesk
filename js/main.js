@@ -46,11 +46,24 @@ function setButtonActions(){
 		}
 	}
 	//end of yes and no buttons js
+	//problem pickers
+	var problemButtons = Array.prototype.slice.call(document.querySelectorAll('.beginButton'));
+	for(var i = 0; i < problemButtons.length; i++){
+		problemButtons[i].onclick = function(){
+			//Need to do the stuff
+			if( /\bbtn\b/.test(this.getAttribute("class")) ){
+				swapClasses(this, "btn", "btnPressed");
+			} else {
+				swapClasses(this, "btnPressed", "btn");
+			}
+		}
+	}
 	//progress buttons
 	var continuebuttons = Array.prototype.slice.call(document.querySelectorAll('.continue'));
 	for(var i = 0; i < continuebuttons.length; i++){
 		continuebuttons[i].onclick = function(){
 			closeSolutions();//closes the solution in case it was wrong so it doesnt distract
+
 			var panel = this.parentElement
 			while(panel.localName != "article"){
 				panel = panel.parentElement;
@@ -62,31 +75,33 @@ function setButtonActions(){
 	askNext[0].onclick = function(){
 		swapClasses(this.nextElementSibling, "hidden", "show");
 	}
-	var special = document.querySelectorAll(".specialOpen");
-	special.onclick = function(){
-		closeSolutions();//closes the solution in case it was wrong so it doesnt distract
-		var panel = this.parentElement
-		while(panel.localName != "article"){
-			panel = panel.parentElement.nextElementSibling;
-		}
-		openQuestion( panel, this.dataset.next );
-	}
 	//finishbuttons
 	var finishbuttons =  Array.prototype.slice.call(document.querySelectorAll('.finishButton'));
 	for(var i = 0; i < finishbuttons.length; i++){
 		finishbuttons[i].onclick = function(){
 			var finishIndex = this.dataset.finishindex; //gets the buttons finish index so it knows which finish screen to show
 			var valid = getAndSetFinishData(finishIndex);//gets and sets all the data needed inside the finish screen
-			if(valid = true){
+			if(valid){
 				openFinish(finishIndex);//opens the finishscreen with the given index
 			} else {
-				fireWarning();
+				fireWarning( document.getElementById("modalPanel"), valid );
 			}
 		}
 	}
+
+	//modalClose
+	document.getElementById("modalClose").onclick = function(){
+		swapClasses(document.getElementById("modalPanel"), "show", "hidden");
+	};
+
 }
-function fireWarning(){
-	alert("Values invalid");
+function fireWarning( modal, error ){
+	var target = Array.prototype.slice.call( document.querySelectorAll('#warning') )[0] ;
+	fillModal(target, error);
+	swapClasses(modal, "hidden", "show");
+}
+function fillModal( target, errorMessage ) {
+	target.innerHTML = errorMessage;
 }
 function optionSelected(object, value){
 	var currentStatus = object.className;
@@ -125,21 +140,15 @@ function swapClasses(object, remove, add){
 	var index: the index where the wanted solution is in within the solutions array
 */
 var openFinish = function( index ){
-	var solutions = ["finish", "finishInternet", "finishInternetEnBellen"];
+	var solutions = document.querySelectorAll('.solution');
 	var solution;
 	closeSolutions(); //closes any solutions that are open before opening another solution
-	switch( parseInt(index) ){
-		case 0:
-			solution = document.querySelectorAll('.'+solutions[0])[0];
-			swapClasses(solution, "hidden", "show");
-			break;
-		case 2:
-			solution = document.querySelectorAll('.'+solutions[2])[0];
-			swapClasses(solution, "hidden", "show");
-			break;
-		default:
-			console.log("You done goofed brah");
+	for(var i = 0; i < solutions.length; i++){
+		if( /\bfinish\b/.test(solutions[i].classList) ){
+			solution = solutions[i];
+		}
 	}
+	swapClasses(solution, "hidden", "show");
 }
 
 /*
@@ -200,8 +209,25 @@ function getAndSetFinishData(index){
 	}
 }*/
 
-function getAndSetFinishData(index){
-	var valueContainers = document.querySelectorAll(".question input, .questionOption");
+function getAndSetFinishData(type){
+	var valueContainers = Array.prototype.slice.call( document.querySelectorAll(".question input, .questionOption") );
+	//Switch shortens the array to the amount of answers that should be printed and checked if they contain content
+		switch( parseInt(type) ){
+			case 0://quick test case will likely not be used in final product
+				valueContainers = valueContainers.slice(0);
+				break;
+			case 1:
+				valueContainers = valueContainers.slice(0, 5);
+				break;
+			case 2:
+				valueContainers = valueContainers.slice(0, 8);
+				break;
+			case 3:
+				valueContainers = valueContainers.slice(0, -1);
+				break;
+			default:
+				console.log("");
+		}
 
 	var valid = true;
 
@@ -219,35 +245,58 @@ function getAndSetFinishData(index){
 			valueSet.push({name: valueContainers[i].name, value: valueContainers[i].value});
 		}
 	}
-	var solutionDiv = document.querySelectorAll(".solution div")[index];
+	var solutionDiv = document.querySelectorAll(".solution .solutionContainer")[0];
 
 	solutionDiv.innerHTML = "";//empty solution
 
 	for(var j = 0; j < valueContainers.length; j++){//fil solution with all of the filled in values
-		//switch separates the different sections
-		switch(j){
-			case 0:
-				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Klant informatie</h4>";
-				break;
-			case 3:
-				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet</h4>";
-				break;
-			case 5:
-				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet en Bellen</h4>";
-				break;
-			case 8:
-				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet, Bellen en Televisie</h4>";
-				break;
-			default:
-				solutionDiv.innerHTML = solutionDiv.innerHTML + "<br />";
+		if(type == "0" || type == "2" || type == "3"){
+			//switch separates the different sections
+			switch(j){
+				case 0:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Klant informatie</h4>";
+					break;
+				case 3:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet</h4>";
+					break;
+				case 5:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Bellen</h4>";
+					break;
+				case 8:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Televisie</h4>";
+					break;
+				default:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br />";
+			}
+		} else if(type == "1" || type == "4") {
+			switch(j){
+				case 0:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Klant informatie</h4>";
+					break;
+				case 3:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Internet</h4>";
+					break;
+				case 5:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br /> <h4>Televisie</h4>";
+					break;
+				default:
+					solutionDiv.innerHTML = solutionDiv.innerHTML + "<br />";
+			}
 		}
 		solutionDiv.innerHTML = solutionDiv.innerHTML + "<span class=\"liner\"> <span class=\"icon " + getIcon(j) + "\"></span> <span class=\"valueName\"> " + valueSet[j].name + "</span> <span class=\"valueValue\">" + valueSet[j].value + "</span> </span>";
 	}
 	return valid;
 }
 
-var iconList = ["name", "date", "modem"];
+var iconList = ["name", "date", "modem", "question"];
 function getIcon( type ){
-	var cssClass = iconList[type];
+	var cssClass;
+
+	if(type < 3){
+		cssClass = iconList[type];
+	} else {
+		cssClass = iconList[3];
+	}
+
 	return cssClass;
 }

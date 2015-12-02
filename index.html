@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<nav>
-			<ul>
+			<ul class="centerContent">
 				<li><a href="#">Home</a></li>
 				<li><a>Solutions</a></li>
 			</ul>
@@ -40,7 +40,28 @@
 								<label for="modem">Merk en type van modem</label>
 							</div>
 							<!--End Question-->
-          	<span class="btn finishButton" data-finishIndex="0">Data is correct</span>
+
+						<span class="btn finishButton" data-finishIndex="0">Data is correct</span>
+<!-- bedoeling was om onderstaande e gebruiken als filters voor de vragen die gesteld moesten worden.
+						<div class="specialButtonBox">
+
+								<div class="button_base b05_3d_roll">
+									<div>Probleem met Internet</div>
+									<div>Internet werkt</div>
+								</div>
+
+								<div class="button_base b05_3d_roll">
+									<div>Probleem met Bellen</div>
+									<div>Bellen werkt</div>
+								</div>
+
+								<div class="button_base b05_3d_roll">
+									<div>Probleem met Televisie</div>
+									<div>Televisie werkt</div>
+								</div>
+
+						</div>
+-->
 					</article>
 					<!--end First fase-->
 					<!-- Second fase -->
@@ -71,7 +92,7 @@
 							<div class="hidden">
 								<h3>Heeft de klant een klacht over het product <em>Internet, Bellen en Televisie</em>?</h3>
 									<a class="btn continue" data-next="internetBellenEnTelevisie">Ja</a>
-									<a class="btn finish" data-finishIndex="0">Nee</a>
+									<a class="btn finishButton" data-finishIndex="1">Nee</a>
 							</div>
 						</div><!--End formreplacer-->
 					</article>
@@ -104,7 +125,8 @@
 						</div>
 
 						<h3>Heeft de klant klacht over het product Internet, Bellen en Televisie?</h3>
-						<a class="btn continue" data-next="internetBellenEnTelevisie">Ja</a><a class="btn finishButton" data-finishIndex="2">Nee</a>
+						<a class="btn continue" data-next="internetBellenEnTelevisie">Ja</a>
+						<a class="btn finishButton" data-finishIndex="2">Nee</a>
 					</article>
 					<!--end third phase-->
 					<!--fourth phase-->
@@ -135,9 +157,11 @@
 							<label for="zendersZoeken">Kunnen er zenders gevonden worden?</label>
 							<div id="zendersZoeken" class="buttonPair">
 								<span class="btn ja">Ja</span>
-								<span class="btn nee abort">Nee</span>
+								<span class="btn nee">Nee</span>
 							</div>
 						</div>
+
+						<a class="btn finishButton" data-finishIndex="3">Nee</a>
 					</article>
 					<!--end fourth phase-->
 				</div>
@@ -145,19 +169,9 @@
 
 			<section class="solutions">
 				<div class="centerContent">
-					<h1>Welkom!</h1>
+					<h1>Informatie &amp; oplossingen</h1>
 
 					<div class="finish solution show">
-						<div class="solutionContainer">
-						</div>
-					</div>
-
-					<div class="finishInternet solution show">
-						<div class="solutionContainer">
-						</div>
-					</div>
-
-					<div class="finishInternetEnBellen solution show">
 						<div class="solutionContainer">
 						</div>
 					</div>
@@ -168,5 +182,20 @@
 		<footer>
 			<span>&copy;2015</span>
 		</footer>
+
+		<!--modal panel-->
+		<div id="modalPanel" class="hidden">
+			<div class="modalContainer">
+				<div class="modalHeader">
+
+				</div>
+				<div class="modalBody">
+					<h2 id="warning"></h2>
+				</div>
+				<div class="modalFooter">
+					<a id="modalClose" class="btn">Close</a>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

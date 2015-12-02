@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
 *{
   padding: 0px;
   margin: 0px;
@@ -13,15 +15,30 @@ html, body, main{
   clear: both;
 }
 
+main{
+    background: snow url(../media/helpdeskIconNetwork.jpg) center center no-repeat;
+    background-size: contain;
+}
+
 article{
   width: 80%;
 
   padding: 15px;
-  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
 
-  background: #FFDDFF;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px dashed black;
+
+  background: rgba(255, 255, 255, 0.7);
+}
+
+section:not(.solutions) .centerContent > .show{
+
+  border-bottom: 2px solid black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 20px; /*Express grotere waarde voor effect*/
 }
 
 .centerContent{
@@ -50,12 +67,9 @@ footer{
 section{
   clear: both;
 
-  padding-top: 7px;
   padding-bottom: 17px;
 
   display: block;
-
-  background: black;
 }
 
 h1{
@@ -113,6 +127,129 @@ a.btn, a.btnPressed{
   background: white;
   color: black;
 }
+/*fancy selector buttons*/
+.specialButtonBox{
+  display: flex;
+  width: 500px;
+  margin-top: 10px;
+}
+
+.button_base {
+    margin: 0px;
+    border: 0px;
+    font-size: 18px;
+
+    margin-left: 20px;
+
+    width: 100%;
+    height: 50px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+.button_base:hover {
+    cursor: pointer;
+}
+
+.b05_3d_roll {
+  perspective: 500px;
+  -webkit-perspective: 500px;
+  -moz-perspective: 500px;
+}
+
+.b05_3d_roll div {
+  position: absolute;
+  text-align: center;
+
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+
+  border: #000000 solid 1px;
+  pointer-events: none;
+
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.b05_3d_roll div:nth-child(1) {
+  color: #000000;
+  background-color: #000000;
+
+  transform: rotateX(90deg);
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+
+  transform-origin: 50% 50% -25px;
+  -webkit-transform-origin: 50% 50% -25px;
+  -moz-transform-origin: 50% 50% -25px;
+}
+
+.b05_3d_roll div:nth-child(2) {
+  color: #000000;
+  background-color: #ffffff;
+
+  transform: rotateX(0deg);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+
+  transform-origin: 50% 50% -25px;
+  -webkit-transform-origin: 50% 50% -25px;
+  -moz-transform-origin: 50% 50% -25px;
+}
+
+.b05_3d_roll:hover div:nth-child(1) {
+  color: #ffffff;
+
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+
+  transform: rotateX(0deg);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+}
+
+.b05_3d_roll:hover div:nth-child(2) {
+  background-color: #000000;
+
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+
+  transform: rotateX(-90deg);
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+}
+/*
+.btn.beginButton{
+  background: green;
+}
+.btn.beginButton:hover{
+  background: darkgray;
+}
+.btnPressed.beginButton{
+  background: red;
+}
+.btnPressed.beginButton:hover{
+  background: lightgray;
+}*/
 
 .finishSection{
   margin-top: 20px;
@@ -340,6 +477,10 @@ nav ul li a, .btn, .question label, .question input[type="text"], .question inpu
   margin-left: auto;
   margin-right: auto;
 }
+.question{
+  background: url("../media/question.png") center center no-repeat;
+  background-size: contain;
+}
 .name{
   background: url("../media/name.png") center center no-repeat;
   background-size: contain;
@@ -393,4 +534,78 @@ nav ul li a{
 nav ul li a:hover, nav ul li a:focus{
   color: black;
   background: white;
+}
+
+/*Modal css*/
+#modalPanel{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  z-index: 100;
+}
+.modalContainer{
+  z-index: 110;
+
+  width: 430px;
+    position: relative;
+    margin: 10% auto;
+    border-radius: 10px;
+    background: #fff;
+}
+.modalHeader{
+  width: 100%;
+  height: 50px;
+}
+.modalBody{
+  height: 300px;
+
+  padding: 15px;
+
+  background-color: lightgray;
+}
+#warning{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: capitalize;
+  text-align: center;
+}
+.modalFooter{
+  width: 100%;
+  height: 50px;
+
+}
+
+#modalClose{
+  background: #606061;
+
+    position: absolute;
+    right: 10px;
+    bottom: 9px;
+    width: 50px;
+
+    color: #FFFFFF;
+    line-height: 25px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+#modalClose:hover{
+  background: #404040;
+
+  -moz-box-shadow: 2px 2px 6px #000;
+  -webkit-box-shadow: 2px 2px 6px #000;
+  box-shadow: 2px 2px 6px #000;
 }
